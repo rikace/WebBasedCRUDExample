@@ -1,0 +1,113 @@
+﻿@model TechStudioTest.ViewModels.ManagerIndexData
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Managers</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            First Name
+        </th>
+        <th>
+            Last Name
+        </th>
+        <th>
+            Office
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Managers)
+    {
+        string selectedRow = "";
+        if (item.ManagerID == ViewBag.ManagerID)
+        {
+            selectedRow = "selectedrow";
+        }
+        <tr class="@selectedRow" valign="top">
+            <td>
+                @item.FirstName
+            </td>
+            <td>
+                @item.LastName
+            </td>
+            <td>
+                @if (item.OfficeAssignment != null)
+                {
+                    @item.OfficeAssignment.Location
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Select", "Index", new { id = item.ManagerID }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.ManagerID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ManagerID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ManagerID }) |
+            </td>
+        </tr>
+    }
+</table>
+
+@if (Model.Projects != null)
+{
+    <h3>Projects Managed by Selected Manager</h3>
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Projects)
+        {
+            string selectedRow = "";
+            if (item.ProjectID == ViewBag.ProjectID)
+            {
+                selectedRow = "selectedrow";
+            }
+
+            <tr class="@selectedRow">
+                <td>
+                    @item.ProjectID
+                </td>
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    @item.Description
+                </td>
+                <td>
+                    @Html.ActionLink("Select", "Index", new { projectID = item.ProjectID })
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+@if (Model.EmployeeRoles != null)
+{
+    <h3>Employee Roles on the Selected Project</h3>
+    <table class="table">
+        <tr>
+            <th>Employee Name</th>
+            <th>Role</th>
+        </tr>
+        @foreach (var item in Model.EmployeeRoles)
+        {
+            <tr>
+                <td>
+                    @item.Employee.FullName
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role)
+                </td>
+            </tr>
+        }
+    </table>
+}

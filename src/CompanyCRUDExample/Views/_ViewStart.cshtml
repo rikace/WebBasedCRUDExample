@@ -1,0 +1,10 @@
+﻿@{
+    if (Session["TechStudioTestAuth"] == null)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_UserLayout.cshtml";
+    }
+}
